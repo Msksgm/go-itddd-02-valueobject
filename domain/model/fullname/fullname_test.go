@@ -37,4 +37,20 @@ func TestNewFullName(t *testing.T) {
 			t.Errorf("got %s, want %s", got, want)
 		}
 	})
+	t.Run("fail lastName is empty", func(t *testing.T) {
+		firstName, lastName := "fistName", ""
+		_, err := NewFullName(firstName, lastName)
+		want := fmt.Sprintf("fullname.NewFullName(%s, %s): lastName is required", firstName, lastName)
+		if got := err.Error(); got != want {
+			t.Errorf("got %s, want %s", got, want)
+		}
+	})
+	t.Run("fail lastName is invalid", func(t *testing.T) {
+		firstName, lastName := "firstName", "last$Name&"
+		_, err := NewFullName(firstName, lastName)
+		want := fmt.Sprintf("fullname.NewFullName(%s, %s): lastName has an invalid character. letter is only", firstName, lastName)
+		if got := err.Error(); got != want {
+			t.Errorf("got %s, want %s", got, want)
+		}
+	})
 }
