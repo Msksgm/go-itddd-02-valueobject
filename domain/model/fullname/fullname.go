@@ -25,6 +25,7 @@ func NewFullName(firstName string, lastName string) (_ *FullName, err error) {
 		return nil, fmt.Errorf("firstName has an invalid character. letter is only")
 	}
 	fullName.firstName = firstName
+
 	// set lastName
 	if lastName == "" {
 		return nil, fmt.Errorf("lastName is required")
