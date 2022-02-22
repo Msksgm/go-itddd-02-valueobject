@@ -21,7 +21,7 @@ func NewFullName(firstName string, lastName string) (_ *FullName, err error) {
 		return nil, fmt.Errorf("firstName is required")
 	}
 	if !ValidateName(firstName) {
-		return nil, fmt.Errorf("The firstName has an invalid format")
+		return nil, fmt.Errorf("firstName has an invalid character. letter is only")
 	}
 	fullName.firstName = firstName
 	fullName.lastName = lastName
@@ -30,5 +30,5 @@ func NewFullName(firstName string, lastName string) (_ *FullName, err error) {
 }
 
 func ValidateName(value string) bool {
-	return regexp.MustCompile(`^[a-zA-Z]+`).MatchString(value)
+	return regexp.MustCompile(`^[a-zA-Z]+$`).MatchString(value)
 }
