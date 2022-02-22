@@ -1,6 +1,7 @@
 package fullname
 
 import (
+	"fmt"
 	"log"
 	"testing"
 
@@ -8,14 +9,24 @@ import (
 )
 
 func TestNewFullName(t *testing.T) {
-	firstName, lastName := "firstName", "lastName"
-	got, err := NewFullName(firstName, lastName)
-	if err != nil {
-		log.Fatal(err)
-	}
+	t.Run("success", func(t *testing.T) {
+		firstName, lastName := "firstName", "lastName"
+		got, err := NewFullName(firstName, lastName)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	want := &FullName{firstName: firstName, lastName: lastName}
-	if diff := cmp.Diff(want, got, cmp.AllowUnexported(FullName{})); diff != "" {
-		t.Errorf("mismatch (-want, +got):\n%s", diff)
-	}
+		want := &FullName{firstName: firstName, lastName: lastName}
+		if diff := cmp.Diff(want, got, cmp.AllowUnexported(FullName{})); diff != "" {
+			t.Errorf("mismatch (-want, +got):\n%s", diff)
+		}
+	})
+	t.Run("fail firstName is empty", func(t *testing.T) {
+		firstName, lastName := "", "lastName"
+		_, err := NewFullName(firstName, lastName)
+		want := fmt.Sprintf("fullname.NewFullName(%s, %s): firstName is required", firstName, lastName)
+		if got := err.Error(); got != want {
+			t.Errorf("got %s, want %s", got, want)
+		}
+	})
 }
