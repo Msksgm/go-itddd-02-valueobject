@@ -42,5 +42,7 @@ func ValidateName(value string) bool {
 }
 
 func (fullName *FullName) Equals(otherFullName FullName) bool {
-	return reflect.DeepEqual(fullName.firstName, otherFullName.lastName) && reflect.DeepEqual(fullName.lastName, fullName.lastName)
+	isfirstNameEqual := reflect.DeepEqual(fullName.firstName, otherFullName.firstName)
+	isLastNameEqual := reflect.DeepEqual(fullName.lastName, otherFullName.lastName)
+	return isfirstNameEqual && isLastNameEqual
 }

@@ -56,14 +56,28 @@ func TestNewFullName(t *testing.T) {
 }
 
 func TestEquals(t *testing.T) {
-	firstName, lastName := "firstName", "lastName"
-	fullName, err := NewFullName(firstName, lastName)
-	if err != nil {
-		log.Fatal(err)
-	}
+	t.Run("equal", func(t *testing.T) {
+		firstName, lastName := "firstName", "lastName"
+		fullName, err := NewFullName(firstName, lastName)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	otherFullName := &FullName{firstName: firstName, lastName: lastName}
-	if !fullName.Equals(*otherFullName) {
-		t.Fatalf("fullName: %v must be equal to otherFullName: %v", fullName, otherFullName)
-	}
+		otherFullName := &FullName{firstName: firstName, lastName: lastName}
+		if !fullName.Equals(*otherFullName) {
+			t.Fatalf("fullName: %v must be equal to otherFullName: %v", fullName, otherFullName)
+		}
+	})
+	t.Run("not equal", func(t *testing.T) {
+		firstName, lastName := "firstName", "lastName"
+		fullName, err := NewFullName(firstName, lastName)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		otherFullName := &FullName{firstName: "otherFirstName", lastName: "otherFirstName"}
+		if fullName.Equals(*otherFullName) {
+			t.Fatalf("fullName: %v must not be equal to otherFullName: %v", fullName, otherFullName)
+		}
+	})
 }
