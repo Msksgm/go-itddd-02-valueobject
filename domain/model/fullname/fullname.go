@@ -2,6 +2,7 @@ package fullname
 
 import (
 	"fmt"
+	"reflect"
 	"regexp"
 
 	"github.com/Msksgm/itddd-go-02-valueobject/iterrors"
@@ -38,4 +39,8 @@ func NewFullName(firstName string, lastName string) (_ *FullName, err error) {
 
 func ValidateName(value string) bool {
 	return regexp.MustCompile(`^[a-zA-Z]+$`).MatchString(value)
+}
+
+func (fullName *FullName) Equals(otherFullName FullName) bool {
+	return reflect.DeepEqual(fullName.firstName, otherFullName.lastName) && reflect.DeepEqual(fullName.lastName, fullName.lastName)
 }

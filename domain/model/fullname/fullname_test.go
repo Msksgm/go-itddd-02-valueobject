@@ -54,3 +54,16 @@ func TestNewFullName(t *testing.T) {
 		}
 	})
 }
+
+func TestEquals(t *testing.T) {
+	firstName, lastName := "firstName", "lastName"
+	fullName, err := NewFullName(firstName, lastName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	otherFullName := &FullName{firstName: firstName, lastName: lastName}
+	if !fullName.Equals(*otherFullName) {
+		t.Fatalf("fullName: %v must be equal to otherFullName: %v", fullName, otherFullName)
+	}
+}
