@@ -15,3 +15,8 @@ func NewMoney(amount decimal.Decimal, currency string) (_ *Money, err error) {
 
 	return money, nil
 }
+
+func (money *Money) Add(arg Money) (_ *Money, err error) {
+	newMoney, err := NewMoney(money.amount.Add(arg.amount), money.currency)
+	return newMoney, err
+}
