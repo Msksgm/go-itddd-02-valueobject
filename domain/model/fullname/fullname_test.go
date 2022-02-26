@@ -59,6 +59,38 @@ func TestNewFullName(t *testing.T) {
 	})
 }
 
+func TestWithChangeFirstName(t *testing.T) {
+	fullName, err := NewFullName(firstName, lastName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	newFirstName := "newFirstName"
+	got, err := fullName.WithChangeFirstName(newFirstName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	want := &FullName{firstName: newFirstName, lastName: lastName}
+	if diff := cmp.Diff(want, got, cmp.AllowUnexported(FullName{})); diff != "" {
+		t.Errorf("mismatch (-want, +got):\n%s", diff)
+	}
+}
+
+func TestWithChangeLastName(t *testing.T) {
+	fullName, err := NewFullName(firstName, lastName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	newLastName := "newLastName"
+	got, err := fullName.WithChangeLastName(newLastName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	want := &FullName{firstName: firstName, lastName: newLastName}
+	if diff := cmp.Diff(want, got, cmp.AllowUnexported(FullName{})); diff != "" {
+		t.Errorf("mismatch (-want, +got):\n%s", diff)
+	}
+}
+
 func TestEquals(t *testing.T) {
 	t.Run("equal", func(t *testing.T) {
 		fullName, err := NewFullName(firstName, lastName)

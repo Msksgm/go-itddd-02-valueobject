@@ -42,6 +42,22 @@ func ValidateName(value string) bool {
 	return regexp.MustCompile(`^[a-zA-Z]+$`).MatchString(value)
 }
 
+func (fullName *FullName) WithChangeFirstName(firstName string) (_ *FullName, err error) {
+	changedFullName, err := NewFullName(firstName, fullName.lastName)
+	if err != nil {
+		return nil, err
+	}
+	return changedFullName, nil
+}
+
+func (fullName *FullName) WithChangeLastName(lastName string) (_ *FullName, err error) {
+	changedFullName, err := NewFullName(fullName.firstName, lastName)
+	if err != nil {
+		return nil, err
+	}
+	return changedFullName, nil
+}
+
 func (fullName *FullName) Equals(otherFullName FullName) bool {
 	isfirstNameEqual := reflect.DeepEqual(fullName.firstName, otherFullName.firstName)
 	isLastNameEqual := reflect.DeepEqual(fullName.lastName, otherFullName.lastName)
