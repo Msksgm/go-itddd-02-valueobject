@@ -8,9 +8,13 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+const (
+	firstName = "firstName"
+	lastName  = "lastName"
+)
+
 func TestNewFullName(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
-		firstName, lastName := "firstName", "lastName"
 		got, err := NewFullName(firstName, lastName)
 		if err != nil {
 			log.Fatal(err)
@@ -22,7 +26,7 @@ func TestNewFullName(t *testing.T) {
 		}
 	})
 	t.Run("fail firstName is empty", func(t *testing.T) {
-		firstName, lastName := "", "lastName"
+		firstName := ""
 		_, err := NewFullName(firstName, lastName)
 		want := fmt.Sprintf("fullname.NewFullName(%s, %s): firstName is required", firstName, lastName)
 		if got := err.Error(); got != want {
@@ -30,7 +34,7 @@ func TestNewFullName(t *testing.T) {
 		}
 	})
 	t.Run("fail firstName is invalid", func(t *testing.T) {
-		firstName, lastName := "first$Name&", "lastName"
+		firstName := "first$Name&"
 		_, err := NewFullName(firstName, lastName)
 		want := fmt.Sprintf("fullname.NewFullName(%s, %s): firstName has an invalid character. letter is only", firstName, lastName)
 		if got := err.Error(); got != want {
@@ -38,7 +42,7 @@ func TestNewFullName(t *testing.T) {
 		}
 	})
 	t.Run("fail lastName is empty", func(t *testing.T) {
-		firstName, lastName := "fistName", ""
+		lastName := ""
 		_, err := NewFullName(firstName, lastName)
 		want := fmt.Sprintf("fullname.NewFullName(%s, %s): lastName is required", firstName, lastName)
 		if got := err.Error(); got != want {
@@ -46,7 +50,7 @@ func TestNewFullName(t *testing.T) {
 		}
 	})
 	t.Run("fail lastName is invalid", func(t *testing.T) {
-		firstName, lastName := "firstName", "last$Name&"
+		lastName := "last$Name&"
 		_, err := NewFullName(firstName, lastName)
 		want := fmt.Sprintf("fullname.NewFullName(%s, %s): lastName has an invalid character. letter is only", firstName, lastName)
 		if got := err.Error(); got != want {
@@ -57,7 +61,6 @@ func TestNewFullName(t *testing.T) {
 
 func TestEquals(t *testing.T) {
 	t.Run("equal", func(t *testing.T) {
-		firstName, lastName := "firstName", "lastName"
 		fullName, err := NewFullName(firstName, lastName)
 		if err != nil {
 			log.Fatal(err)
@@ -69,7 +72,6 @@ func TestEquals(t *testing.T) {
 		}
 	})
 	t.Run("not equal", func(t *testing.T) {
-		firstName, lastName := "firstName", "lastName"
 		fullName, err := NewFullName(firstName, lastName)
 		if err != nil {
 			log.Fatal(err)
