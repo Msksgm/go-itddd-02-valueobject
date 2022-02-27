@@ -59,7 +59,5 @@ func (fullName *FullName) WithChangeLastName(lastName string) (_ *FullName, err 
 }
 
 func (fullName *FullName) Equals(otherFullName FullName) bool {
-	isfirstNameEqual := reflect.DeepEqual(fullName.firstName, otherFullName.firstName)
-	isLastNameEqual := reflect.DeepEqual(fullName.lastName, otherFullName.lastName)
-	return isfirstNameEqual && isLastNameEqual
+	return reflect.DeepEqual(fullName.firstName, otherFullName.firstName) && reflect.DeepEqual(fullName.lastName, otherFullName.lastName)
 }
