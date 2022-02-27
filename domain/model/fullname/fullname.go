@@ -18,24 +18,40 @@ func NewFullName(firstName string, lastName string) (_ *FullName, err error) {
 	fullName := new(FullName)
 
 	// set firstName
-	if firstName == "" {
-		return nil, fmt.Errorf("firstName is required")
-	}
-	if !ValidateName(firstName) {
-		return nil, fmt.Errorf("firstName has an invalid character. letter is only")
+	err = validateFirstName(firstName)
+	if err != nil {
+		return nil, err
 	}
 	fullName.firstName = firstName
 
 	// set lastName
-	if lastName == "" {
-		return nil, fmt.Errorf("lastName is required")
-	}
-	if !ValidateName(lastName) {
-		return nil, fmt.Errorf("lastName has an invalid character. letter is only")
+	err = validateLastName(lastName)
+	if err != nil {
+		return nil, err
 	}
 	fullName.lastName = lastName
 
 	return fullName, nil
+}
+
+func validateFirstName(firstName string) error {
+	if firstName == "" {
+		return fmt.Errorf("firstName is required")
+	}
+	if !ValidateName(firstName) {
+		return fmt.Errorf("firstName has an invalid character. letter is only")
+	}
+	return nil
+}
+
+func validateLastName(lastName string) error {
+	if lastName == "" {
+		return fmt.Errorf("lastName is required")
+	}
+	if !ValidateName(lastName) {
+		return fmt.Errorf("lastName has an invalid character. letter is only")
+	}
+	return nil
 }
 
 func ValidateName(value string) bool {
